@@ -1,9 +1,13 @@
 package supercoding.mall.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import lombok.Getter;
 import org.springframework.validation.annotation.Validated;
 
 @Entity
+@Getter
+@Builder
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,4 +20,8 @@ public class User {
 
     @OneToOne(fetch = FetchType.LAZY)
     private Cart cart;
+
+    public User() {
+
+    }
 }
