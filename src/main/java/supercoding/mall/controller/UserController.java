@@ -9,6 +9,7 @@ import supercoding.mall.domain.UserDTO;
 import supercoding.mall.service.UserService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,18 +24,23 @@ public class UserController {
         return ResponseEntity.ok("회원가입 성공");
     }
 
-    @PostMapping("/add/{id}")
+    @PostMapping("{id}/add")
     public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO,@PathVariable String id){
         userService.addProduct(productDTO,id);
         return ResponseEntity.ok("상품 추가 성공");
     }
 
     @GetMapping("/view")
-    public ResponseEntity<List<Product>> viewProducts(){
-        List<Product> productList = userService.viewProducts();
-        return ResponseEntity.ok(productList);
+    public ResponseEntity< Map<String, Map<String, Product>>> viewProducts(){
+        Map<String, Map<String, Product>> productMap = userService.viewProducts();
+        return ResponseEntity.ok(productMap);
     }
 
+    @PostMapping("{id}/delete")
+    public ResponseEntity<String> deleteProduct(@PathVariable String id,@RequestParam String product_name){
+        userService.deleteProduct(id,product_name);
+        return ResponseEntity.ok("상품 삭제 성공");
+    }
 
 
 }
