@@ -1,10 +1,10 @@
 package supercoding.mall.domain;
 
 import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 @Getter
-@Setter
+@NoArgsConstructor
 public class UserDTO {
     private String userId;
     private String name;

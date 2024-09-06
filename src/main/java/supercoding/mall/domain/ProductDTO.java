@@ -1,11 +1,10 @@
 package supercoding.mall.domain;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
-@RequiredArgsConstructor
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 public class ProductDTO {
     private String productName;
     private int price;
