@@ -25,11 +25,11 @@ public class ProductController {
     @PostMapping("{id}/add")
     public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO, @PathVariable String id){
         productService.addProduct(productDTO,id);
-        return ResponseEntity.ok("상품 추가 성공");
+        return ResponseEntity.ok("상품 추가 성공 "+productDTO.getProductName());
     }
 
-    @PostMapping("{id}/delete/{product_id}")
-    public ResponseEntity<String> deleteProduct(@PathVariable String id,@PathVariable String product_id){
+    @PostMapping("{id}/delete")
+    public ResponseEntity<String> deleteProduct(@PathVariable String id,@RequestParam String product_id){
         productService.deleteProduct(id,product_id);
         return ResponseEntity.ok("상품 삭제 성공 상품번호:"+product_id);
     }

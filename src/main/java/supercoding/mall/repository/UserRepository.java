@@ -16,16 +16,19 @@ import java.util.*;
 public class UserRepository {
     @Getter
     private static Map<String,User> userMap = new HashMap<>();
+    private final CartRepository cartRepository;
 
-    public void addUser(int serialId,UserDTO userDTO){
+    public User addUser(int serialId,UserDTO userDTO){
         User user = User.builder()
                 .id(String.valueOf(serialId))
                 .userId(userDTO.getUserId())
                 .name(userDTO.getName())
                 .address(userDTO.getAddress())
                 .phoneNum(userDTO.getPhoneNum())
+                .cart(cartRepository.makeCart(serialId))
                 .build();
         userMap.put(user.getId(), user);
+        return user;
     }
 
     public long findByUserId(String userId){
