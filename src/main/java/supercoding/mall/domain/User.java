@@ -3,6 +3,8 @@ package supercoding.mall.domain;
 import lombok.Builder;
 import lombok.Getter;
 
+import java.util.Map;
+
 @Getter
 @Builder
 public class User {
@@ -11,5 +13,5 @@ public class User {
     private String name;
     private String address;
     private String phoneNum;
-    private Cart cart;
+    private Map<String,Product> cart;
 }
