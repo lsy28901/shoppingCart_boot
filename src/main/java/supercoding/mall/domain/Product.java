@@ -8,7 +8,6 @@ import lombok.Getter;
 public class Product {
     private String id;
     private String productName;
-    private String userId;
     private int price;
     private int quantity;
     private int totalPrice;

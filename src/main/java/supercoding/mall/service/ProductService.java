@@ -3,9 +3,10 @@ package supercoding.mall.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import supercoding.mall.domain.Product;
-import supercoding.mall.domain.ProductDTO;
+import supercoding.mall.domain.AddProductDTO;
 import supercoding.mall.repository.ProductRepository;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -14,16 +15,16 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     private static int serialProductId = 1;
-    public void addProduct(ProductDTO productDTO, String userId){
-        productRepository.addProduct(serialProductId++ , productDTO, userId);
+    public void addProduct(AddProductDTO addProductDTO){
+        productRepository.addProduct(serialProductId++ , addProductDTO);
     }
 
-    public void deleteProduct(String userId,String productId){
-        productRepository.deleteProduct(userId,productId);
+    public void deleteProduct(String productId){
+        productRepository.deleteProduct(productId);
         serialProductId--;
     }
 
-    public Map<String, Map<String, Product>> viewProducts(){
-        return ProductRepository.getProductMap();
+    public List<Product> viewProducts(){
+        return ProductRepository.getProductList();
     }
 }

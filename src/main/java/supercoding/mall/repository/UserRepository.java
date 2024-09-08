@@ -3,10 +3,8 @@ package supercoding.mall.repository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import supercoding.mall.domain.Product;
-import supercoding.mall.domain.ProductDTO;
 import supercoding.mall.domain.User;
-import supercoding.mall.domain.UserDTO;
+import supercoding.mall.domain.SignUpUserDTO;
 
 import java.util.*;
 
@@ -15,24 +13,27 @@ import java.util.*;
 @RequiredArgsConstructor
 public class UserRepository {
     @Getter
-    private static Map<String,User> userMap = new HashMap<>();
+    private static List<User> userList = new ArrayList<>();
     private final CartRepository cartRepository;
 
-    public User addUser(int serialId,UserDTO userDTO){
+    public User addUser(int serialId, SignUpUserDTO signUpUserDTO){
         User user = User.builder()
                 .id(String.valueOf(serialId))
-                .userId(userDTO.getUserId())
-                .name(userDTO.getName())
-                .address(userDTO.getAddress())
-                .phoneNum(userDTO.getPhoneNum())
-                .cart(cartRepository.makeCart(serialId))
+                .userId(signUpUserDTO.getUserId())
+                .name(signUpUserDTO.getName())
+                .address(signUpUserDTO.getAddress())
+                .phoneNum(signUpUserDTO.getPhoneNum())
+                .cart(cartRepository.makeCart(serialId).get(String.valueOf(serialId)))
                 .build();
-        userMap.put(user.getId(), user);
+        userList.add(user);
         return user;
     }
 
     public long findByUserId(String userId){
-        return userMap.entrySet().stream().filter(user->user.getValue().getUserId().equals(userId)).count();
+        return userList.stream().filter(u -> u.getUserId().equals(userId)).count();
+    }
+    public User findUser(String userId){
+        return userList.stream().filter(u -> u.getUserId().equals(userId)).findFirst().get();
     }
 
 

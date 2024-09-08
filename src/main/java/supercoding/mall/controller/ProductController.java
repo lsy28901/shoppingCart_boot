@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import supercoding.mall.domain.Product;
-import supercoding.mall.domain.ProductDTO;
+import supercoding.mall.domain.AddProductDTO;
 import supercoding.mall.service.ProductService;
 
-import java.util.Map;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,20 +17,20 @@ public class ProductController {
     private final ProductService productService;
 
     @GetMapping("/view")
-    public ResponseEntity< Map<String, Map<String, Product>>> viewProducts(){
-        Map<String, Map<String, Product>> productMap = productService.viewProducts();
-        return ResponseEntity.ok(productMap);
+    public ResponseEntity<List<Product>> viewProducts(){
+        List<Product> products = productService.viewProducts();
+        return ResponseEntity.ok(products);
     }
 
-    @PostMapping("{id}/add")
-    public ResponseEntity<String> addProduct(@RequestBody ProductDTO productDTO, @PathVariable String id){
-        productService.addProduct(productDTO,id);
-        return ResponseEntity.ok("상품 추가 성공 "+productDTO.getProductName());
+    @PostMapping("/add")
+    public ResponseEntity<String> addProduct(@RequestBody AddProductDTO addProductDTO){
+        productService.addProduct(addProductDTO);
+        return ResponseEntity.ok("상품 추가 성공 "+ addProductDTO.getProductName());
     }
 
-    @PostMapping("{id}/delete")
-    public ResponseEntity<String> deleteProduct(@PathVariable String id,@RequestParam String product_id){
-        productService.deleteProduct(id,product_id);
+    @PostMapping("/delete")
+    public ResponseEntity<String> deleteProduct(@RequestParam String product_id){
+        productService.deleteProduct(product_id);
         return ResponseEntity.ok("상품 삭제 성공 상품번호:"+product_id);
     }
 }

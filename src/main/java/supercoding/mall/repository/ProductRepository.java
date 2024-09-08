@@ -4,48 +4,38 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import supercoding.mall.domain.Product;
-import supercoding.mall.domain.ProductDTO;
+import supercoding.mall.domain.AddProductDTO;
 import supercoding.mall.domain.User;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
 @Getter
 @RequiredArgsConstructor
 public class ProductRepository {
-    private final UserRepository userRepository;
 
     @Getter
-    private static Map<String, Map<String, Product>> productMap = new HashMap<>();
+    private static List<Product> productList = new ArrayList<>();
 
-    public void addProduct(int serialId, ProductDTO productDTO, String userId) {
-        User findedUser = UserRepository.getUserMap().get(userId);
+    public void addProduct(int serialId, AddProductDTO addProductDTO) {
         Product product = Product.builder()
                 .id(String.valueOf(serialId))
-                .productName(productDTO.getProductName())
-                .userId(findedUser.getUserId())
-                .price(productDTO.getPrice())
-                .quantity(productDTO.getQuantity())
-                .totalPrice(productDTO.getPrice() * productDTO.getQuantity())
-                .category(productDTO.getCategory().getName()).build();
-
-//        Map<String, Product> innerMap = productMap.computeIfAbsent(findedUser.getUserId(), k -> new HashMap<>());
-        Map<String, Product> innerMap = productMap.get(findedUser.getId());
-        if (innerMap == null) {
-            innerMap = new HashMap<>();
-            productMap.put(findedUser.getId(), innerMap);
-        }
-        innerMap.put(product.getId(), product);
+                .productName(addProductDTO.getProductName())
+                .price(addProductDTO.getPrice())
+                .quantity(addProductDTO.getQuantity())
+                .totalPrice(addProductDTO.getPrice() * addProductDTO.getQuantity())
+                .category(addProductDTO.getCategory().getName()).build();
+        productList.add(product);
     }
 
-    public Product findProduct(String userId, String productId) {
-        User findUser = userRepository.getUserMap().get(userId);
-        Map<String, Product> products = productMap.get(findUser.getId());
-        return products.get(productId);
+    public Product findProduct(String productId) {
+        return productList.stream().filter(p->p.getId().equals(productId)).findFirst().get();
     }
 
-    public void deleteProduct(String userId, String productId) {
-        productMap.get(userId).remove(productId);
+    public void deleteProduct(String productId) {
+        productList.remove(findProduct(productId));
     }
 }
