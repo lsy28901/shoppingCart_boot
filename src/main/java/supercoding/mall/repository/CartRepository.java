@@ -1,11 +1,8 @@
 package supercoding.mall.repository;
 
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import supercoding.mall.domain.Product;
-import supercoding.mall.domain.User;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

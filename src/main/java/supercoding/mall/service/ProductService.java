@@ -7,7 +7,6 @@ import supercoding.mall.domain.AddProductDTO;
 import supercoding.mall.repository.ProductRepository;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor

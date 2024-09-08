@@ -5,9 +5,7 @@ import org.springframework.stereotype.Service;
 import supercoding.mall.domain.Product;
 import supercoding.mall.repository.CartRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
