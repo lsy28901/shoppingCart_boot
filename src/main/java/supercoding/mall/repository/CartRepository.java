@@ -29,7 +29,7 @@ public class CartRepository {
         myCart.add(findProduct);
     }
 
-    public List<Product> viewMyCart(String userId){
+    public List<Product> getMyCart(String userId){
         return cart.get(userId);
     }
 
