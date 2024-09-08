@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import supercoding.mall.domain.Product;
 import supercoding.mall.repository.CartRepository;
+import supercoding.mall.repository.ProductRepository;
 
 import java.util.List;
 
@@ -12,13 +13,18 @@ import java.util.List;
 public class CartService {
 
     private final CartRepository cartRepository;
+    private final ProductRepository productRepository;
 
     public void addToCart(String userId, String productId){
-        cartRepository.addToCart(userId,productId);
+        Product findProduct = productRepository.findProduct(productId);
+        List<Product> myCart = cartRepository.getMyCart(userId);
+        cartRepository.addToCart(findProduct,myCart);
     }
 
     public void deleteToCart(String userId,String productId){
-        cartRepository.deleteToCart(userId,productId);
+        Product findProduct = productRepository.findProduct(productId);
+        List<Product> myCart = cartRepository.getMyCart(userId);
+        cartRepository.deleteToCart(findProduct,myCart);
     }
 
     public List<Product> viewMyCart(String userId){

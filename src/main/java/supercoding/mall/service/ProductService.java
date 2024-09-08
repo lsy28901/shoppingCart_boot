@@ -15,7 +15,14 @@ public class ProductService {
 
     private static int serialProductId = 1;
     public void addProduct(AddProductDTO addProductDTO){
-        productRepository.addProduct(serialProductId++ , addProductDTO);
+        Product product = Product.builder()
+                .id(String.valueOf(serialProductId++))
+                .productName(addProductDTO.getProductName())
+                .price(addProductDTO.getPrice())
+                .quantity(addProductDTO.getQuantity())
+                .totalPrice(addProductDTO.getPrice() * addProductDTO.getQuantity())
+                .category(addProductDTO.getCategory().getName()).build();
+        productRepository.addProduct(product);
     }
 
     public void deleteProduct(String productId){

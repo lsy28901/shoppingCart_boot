@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import supercoding.mall.domain.User;
-import supercoding.mall.domain.SignUpUserDTO;
 
 import java.util.*;
 
@@ -14,17 +13,8 @@ import java.util.*;
 public class UserRepository {
     @Getter
     private static List<User> userList = new ArrayList<>();
-    private final CartRepository cartRepository;
 
-    public User addUser(int serialId, SignUpUserDTO signUpUserDTO){
-        User user = User.builder()
-                .id(String.valueOf(serialId))
-                .userId(signUpUserDTO.getUserId())
-                .name(signUpUserDTO.getName())
-                .address(signUpUserDTO.getAddress())
-                .phoneNum(signUpUserDTO.getPhoneNum())
-                .cart(cartRepository.makeCart(serialId).get(String.valueOf(serialId)))
-                .build();
+    public User addUser(User user){
         userList.add(user);
         return user;
     }
