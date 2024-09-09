@@ -1,30 +1,49 @@
 package supercoding.mall.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import supercoding.mall.domain.Product;
+import supercoding.mall.exceptions.NotFoundException;
 import supercoding.mall.repository.CartRepository;
 import supercoding.mall.repository.ProductRepository;
+import supercoding.mall.exceptions.AlreadyExistProductToCartException;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CartService {
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
 
     public void addToCart(String userId, String productId){
-        Product findProduct = productRepository.findProduct(productId);
+        Optional<Product> findProduct = productRepository.findProduct(productId);
         List<Product> myCart = cartRepository.getMyCart(userId);
-        cartRepository.addToCart(findProduct,myCart);
+
+        Optional<Product> findProductToCart = cartRepository.findProductToCart(userId,productId);
+        if (findProductToCart.isEmpty()){
+            cartRepository.addToCart(findProduct.get() ,myCart);
+        }else {
+            throw new AlreadyExistProductToCartException("장바구니에 해당 상품이 이미 존재합니다");
+        }
+
     }
 
     public void deleteToCart(String userId,String productId){
-        Product findProduct = productRepository.findProduct(productId);
         List<Product> myCart = cartRepository.getMyCart(userId);
-        cartRepository.deleteToCart(findProduct,myCart);
+        Optional<Product> findProductToCart = cartRepository.findProductToCart(userId,productId);
+
+        if (findProductToCart.isPresent()){
+            cartRepository.deleteToCart(findProductToCart.get() ,myCart);
+        }else {
+            throw new NotFoundException("장바구니에 해당 상품이 없음");
+        }
     }
 
     public List<Product> viewMyCart(String userId){

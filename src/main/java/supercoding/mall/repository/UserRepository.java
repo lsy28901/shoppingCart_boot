@@ -22,8 +22,8 @@ public class UserRepository {
     public long findByUserId(String userId){
         return userList.stream().filter(u -> u.getUserId().equals(userId)).count();
     }
-    public User findUser(String userId){
-        return userList.stream().filter(u -> u.getUserId().equals(userId)).findFirst().get();
+    public Optional<User> findUser(String userId){
+        return userList.stream().filter(u -> u.getUserId().equals(userId)).findFirst();
     }
 
 

@@ -18,16 +18,16 @@ public class CartController {
 
     @Operation(summary = "장바구니에 추가", description = "내 장바구니에 하나의 Product 추가합니다.")
     @PostMapping("/{id}/add")
-    public ResponseEntity<String> addToCart(@PathVariable String id, @RequestParam String product_id){
+    public String addToCart(@PathVariable String id, @RequestParam String product_id){
         cartService.addToCart(id,product_id);
-        return ResponseEntity.ok("장바구니에 담기 성공");
+        return "장바구니에 담기 성공";
     }
 
     @Operation(summary = "장바구니에서 삭제", description = "내 장바구니에서 하나의 Product 삭제합니다.")
     @PostMapping("/{id}/delete")
-    public ResponseEntity<String> deleteToCart(@PathVariable String id,@RequestParam String product_id){
+    public String deleteToCart(@PathVariable String id,@RequestParam String product_id){
         cartService.deleteToCart(id,product_id);
-        return ResponseEntity.ok("장바구니에서 삭제 성공 id:"+product_id);
+        return "장바구니에서 삭제 성공";
     }
 
     @Operation(summary = "장바구니 조회", description = "내 장바구니를 조회합니다.")
