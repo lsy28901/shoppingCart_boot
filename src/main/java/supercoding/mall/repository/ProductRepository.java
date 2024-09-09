@@ -28,6 +28,6 @@ public class ProductRepository {
     }
 
     public void deleteProduct(String productId) {
-        productList.remove(findProduct(productId));
+        productList.remove(findProduct(productId).get());
     }
 }
