@@ -8,6 +8,7 @@ import supercoding.mall.domain.AddProductDTO;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @Getter
@@ -22,8 +23,8 @@ public class ProductRepository {
     }
 
 
-    public Product findProduct(String productId) {
-        return productList.stream().filter(p->p.getId().equals(productId)).findFirst().get();
+    public Optional<Product> findProduct(String productId) {
+        return productList.stream().filter(p->p.getId().equals(productId)).findFirst();
     }
 
     public void deleteProduct(String productId) {

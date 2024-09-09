@@ -33,8 +33,8 @@ public class ProductController {
 
     @Operation(summary = "상품 삭제", description = "등록된 하나의 Product 삭제합니다.")
     @PostMapping("/delete")
-    public ResponseEntity<String> deleteProduct(@RequestParam String product_id){
+    public String deleteProduct(@RequestParam String product_id){
         productService.deleteProduct(product_id);
-        return ResponseEntity.ok("상품 삭제 성공 상품번호:"+product_id);
+        return "상품 삭제 성공";
     }
 }
